@@ -45,9 +45,9 @@ runs:
        
          # check if repository is template repository
           response=$(gh api -H "Accept: application/vnd.github+json" --hostname "${{ inputs.HOSTNAME }}" /repos/${{ inputs.TEMPLATE_OWNER }}/${{ inputs.TEMPLATE_REPO_NAME }})
-          echo "Response: $response"
+          echo "$response"
          # check if repository exists
-          if [ "$response" != "200" ]; then
+          if [ "$response" == "Not Found" ]; then
             echo "Repository does not exist."
             exit 1  # Exit with an error code
           fi
