@@ -1,9 +1,7 @@
 name: Create Repo in GitHub organization
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   create-repo-in-org:
