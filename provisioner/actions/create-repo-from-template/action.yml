@@ -45,7 +45,6 @@ runs:
        
          # check if repository is template repository
           response=$(gh api -H "Accept: application/vnd.github+json" --hostname "${{ inputs.HOSTNAME }}" /repos/${{ inputs.TEMPLATE_OWNER }}/${{ inputs.TEMPLATE_REPO_NAME }})
-          echo "Response1: $response"
          # check if repository exists
           if [ "$response" == "Not Found" ]; then
             echo "Repository does not exist."
@@ -63,10 +62,12 @@ runs:
                   -H "Accept: application/vnd.github+json" \                  
                   --hostname "${{ inputs.HOSTNAME }}" \
                   "/repos/${{ inputs.TEMPLATE_OWNER }}/${{ inputs.TEMPLATE_REPO_NAME }}/generate" \
+                  -f owner='kalpana' \
                 -f "name=${{ inputs.REPO_NAME }}" \
                 -f "description=${{ inputs.DESCRIPTION }}" \
                 -F "include_all_branches=${{ inputs.INCLUDE_ALL_BRANCHES }}" \
                 -F "private=${{ inputs.PRIVATE }}"
+                
             fi
           fi 
         shell: bash      
