@@ -45,13 +45,21 @@ runs:
        
          # check if repository is template repository
           response=$(gh api -H "Accept: application/vnd.github+json" --hostname "${{ inputs.HOSTNAME }}" /repos/${{ inputs.TEMPLATE_OWNER }}/${{ inputs.TEMPLATE_REPO_NAME }})
-                    
-          is_template=$(echo "$response" | jq '.is_template')
-          if [ "$is_template" == "false" ]; then
-            echo "Repository is not template repository."
-            exit 1  # Exit with an error code           
+
+         # check if repository exists
+          if [ "$response" != "200" ]; then
+            echo "Repository does not exist."
+            exit 1  # Exit with an error code
           fi
           else
-            echo "Repository is template repository."
-          fi
+            echo "Repository exists."           
+            is_template=$(echo "$response" | jq '.is_template')
+            if [ "$is_template" == "false" ]; then
+              echo "Repository is not template repository."
+              exit 1  # Exit with an error code           
+            fi
+            else
+              echo "Repository is template repository."
+            fi
+          fi 
         shell: bash      
