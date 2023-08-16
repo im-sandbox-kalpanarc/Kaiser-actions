@@ -16,10 +16,10 @@ jobs:
         uses: ./provisioner/actions/create-repo-from-template
         with:
           ORG_NAME: test-KR
-          REPO_NAME: first-repo
+          REPO_NAME: first-template-repo
           TEMPLATE_REPO_NAME: second-repo
           TEMPLATE_OWNER: kalpana          
           HOSTNAME: ${{ secrets.HOST_NAME }}
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
-          DESCRIPTION: First repo
+          DESCRIPTION: First template repo
 

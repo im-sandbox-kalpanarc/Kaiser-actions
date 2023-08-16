@@ -57,7 +57,16 @@ runs:
               echo "Repository is not template repository."
               exit 1  # Exit with an error code
             else
-              echo "Repository is template repository."
+               # Creating repository from template        
+                gh api \
+                  --method POST \
+                  -H "Accept: application/vnd.github+json" \                  
+                  --hostname "${{ inputs.HOSTNAME }}" \
+                  "/repos/${{ inputs.TEMPLATE_OWNER }}/${{ inputs.TEMPLATE_REPO_NAME }}/generate" \
+                -f "name=${{ inputs.REPO_NAME }}" \
+                -f "description=${{ inputs.DESCRIPTION }}" \
+                -F "include_all_branches=${{ inputs.INCLUDE_ALL_BRANCHES }}" \
+                -F "private=${{ inputs.PRIVATE }}"
             fi
           fi 
         shell: bash      
