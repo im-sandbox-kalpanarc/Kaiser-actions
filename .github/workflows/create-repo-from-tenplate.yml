@@ -1,9 +1,7 @@
 name: Create Repo in GitHub organization from template
 
 on:
-  push:
-    branches:
-        - main
+  workflow_dispatch:
 
 jobs:
   create-repo-from-template-in-org:

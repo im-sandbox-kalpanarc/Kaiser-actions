@@ -1,7 +1,9 @@
 name: Create Repo in GitHub organization
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   create-repo-in-org:
@@ -15,6 +17,6 @@ jobs:
         with:
           ORG_NAME: suryakaiser
           REPO_NAME: test-repo
-          HOSTNAME: ${{ vars.hostname }}
-          USER_TOKEN: ${{ secrets.user_token }}
+          HOSTNAME: ${{ secrets.HOST_NAME }}
+          USER_TOKEN: ${{ secrets.USER_TOKEN }}
           DESCRIPTION: First repo
