@@ -1,0 +1,29 @@
+name: Create Runner Group at Enterprise Level
+description: Creates a runner group at the enterprise level using the GitHub API.
+
+inputs:
+  GROUP_NAME:
+    description: 'Enter Runner group name'
+    required: true
+  ENTERPRISE_SLUG_NAME:
+    description: 'Enter the name of ENTERPRISE SLUG'
+    required: true
+  USER_TOKEN:
+    description: 'Enter Personal access token of user'
+    required: true
+  HOSTNAME:
+    description: 'Enter the hostname'
+    required: true
+    
+runs:
+  using: composite
+  steps:
+    - name: Create runner groups at enterprise
+      run: |
+        curl -L \
+        -X POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "Authorization: Bearer ${{ inputs.USER_TOKEN }}" \
+          "${{ inputs.HOSTNAME }}/api/v3/enterprises/${{ inputs.ENTERPRISE_SLUG_NAME }}/actions/runner-groups" \
+        -d "{\"name\":\"${{ inputs.GROUP_NAME }}\",\"visibility\":\"selected\"}"
+      shell: bash  

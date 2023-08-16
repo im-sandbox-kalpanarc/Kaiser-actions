@@ -1,0 +1,22 @@
+name: Create Repo in GitHub organization from template
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  create-repo-from-template-in-org:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create repo from template
+        uses: ./provisioner/actions/create-repo-from-template
+        with:
+          ORG_NAME: test-KR
+          REPO_NAME: first-repo
+          HOSTNAME: ${{ secrets.HOST_NAME }}
+          USER_TOKEN: ${{ secrets.USER_TOKEN }}
+          DESCRIPTION: First repo

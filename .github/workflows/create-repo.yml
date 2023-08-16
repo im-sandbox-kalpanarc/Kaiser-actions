@@ -1,0 +1,20 @@
+name: Create Repo in GitHub organization
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-repo-in-org:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create repo in organization
+        uses: ./provisioner/actions/create-repo
+        with:
+          ORG_NAME: suryakaiser
+          REPO_NAME: test-repo
+          HOSTNAME: ${{ vars.hostname }}
+          USER_TOKEN: ${{ secrets.user_token }}
+          DESCRIPTION: First repo

@@ -1,0 +1,63 @@
+name: Create Repository from template
+description: Creates a repository using a templte within an organization using the gh CLI.
+
+inputs:
+  ORG_NAME:
+    description: 'Enter organization name'
+    required: true
+  REPO_NAME:
+    description: 'Enter name of repository'
+    required: true
+  USER_TOKEN:
+    description: 'Enter the user token'
+    required: true     
+  DESCRIPTION:
+    description: 'Enter the Description'
+    required: true
+  HOSTNAME:
+    description: 'Enter the hostname'
+    required: true 
+  HOMEPAGE:
+    description: 'Enter the homepage'
+    default: 'https://im-kp-es379.eastus.cloudapp.azure.com'
+  PRIVATE:
+    description: 'Provide whether repository is private or not'
+    default: 'true'  
+  INCLUDE_ALL_BRANCHES:
+    description: 'Provide whether repository can include all branches or not'
+    default: 'false'  
+
+runs:
+  using: composite
+  steps:
+      - name: Authenticate with GitHub
+        run: echo "${{ inputs.USER_TOKEN  }}" | gh auth login -h "${{ inputs.HOSTNAME }}" --with-token
+        shell: bash
+
+      - name: Check if repository is template repository
+        run: |          
+       
+          # check if repository is template repository
+           response=$(gh api -H "Accept: application/vnd.github+json" --hostname "${{ inputs.HOSTNAME }}" /repos/${{ inputs.ORG_NAME }}/${{ inputs.REPO_NAME }})
+           is_template=$(echo "$response" | jq '.is_template')
+           if [ "$is_template" == "false" ]; then
+            echo "Repository is not template repository."
+            exit 1  # Exit with an error code           
+           fi
+           else
+            echo "Repository is template repository."
+                     
+            # Creating repository from template
+        
+            gh api \
+              --method POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              --hostname "${{ inputs.HOSTNAME }}" \
+              "/repos/${{ inputs.ORG_NAME }}/${{ inputs.REPO_NAME }}/generate" \
+            -f "name=${{ inputs.REPO_NAME }}" \
+            -f "description=${{ inputs.DESCRIPTION }}" \
+            -F "include_all_branches=${{ inputs.INCLUDE_ALL_BRANCHES }}" \
+            -F "private=${{ inputs.PRIVATE }}"
+            fi
+        shell: bash      

@@ -1,0 +1,20 @@
+name: Create Organization at enterprise level custom
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-org:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Provision organization
+        uses: ./provisioner/actions/create-organization-at-enterprise-level
+        with:
+          ORG_NAME: Test-org-Raj
+          PROFILE_NAME: Test-org-Raj
+          ADMIN: rajkumar
+          TOKEN : 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
+          HOSTNAME: im-kp-es379.eastus.cloudapp.azure.com

@@ -1,0 +1,21 @@
+name: 'Create a new branch'
+description: 'Creates a branch in Github'
+inputs:
+  token:
+    description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
+    default: ${{ github.token }}
+  path:
+    description: 'The hostname and path to the repo that has the source branch'
+    default: (get the current github context)
+  source-branch:
+    description: 'defines which branch to use as the base. if not provided, uses $default-branch'
+    default: ${{ github.default-branch }}
+  new-branch-name:
+    description: 'the new branch name'
+  runs: |
+    
+
+    curl -L \
+      -H "Accept: application/vnd.github+json" \
+      -H "Authorization: Bearer ${{ token }}" \
+      ${{ path }}/git/ref/${{ source_sha }}
