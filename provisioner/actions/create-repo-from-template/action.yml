@@ -49,15 +49,13 @@ runs:
          # check if repository exists
           if [ "$response" == "Not Found" ]; then
             echo "Repository does not exist."
-            exit 1  # Exit with an error code
-          fi
+            exit 1  # Exit with an error code          
           else
             echo "Repository exists."           
             is_template=$(echo "$response" | jq '.is_template')
             if [ "$is_template" == "false" ]; then
               echo "Repository is not template repository."
-              exit 1  # Exit with an error code           
-            fi
+              exit 1  # Exit with an error code
             else
               echo "Repository is template repository."
             fi
