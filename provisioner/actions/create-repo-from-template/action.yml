@@ -44,7 +44,8 @@ runs:
         run: |          
        
          # check if repository is template repository
-          response=$(gh api -H "Accept: application/vnd.github+json" --hostname "${{ inputs.HOSTNAME }}" /repos/${{ inputs.ORG_NAME }}/${{ inputs.REPO_NAME }})
+          response=$(gh api -H "Accept: application/vnd.github+json" --hostname "${{ inputs.HOSTNAME }}" /repos/kalpana/${{ inputs.REPO_NAME }})
+                    
           is_template=$(echo "$response" | jq '.is_template')
           if [ "$is_template" == "false" ]; then
             echo "Repository is not template repository."
